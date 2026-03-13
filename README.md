@@ -1,6 +1,8 @@
 # node-react-fullstack
 
-A full-stack TypeScript application with GitHub OAuth authentication, built as a monorepo using npm workspaces.
+A full-stack TypeScript application with GitHub OAuth authentication, built as a monorepo using npm workspaces. Used as a based for a Digital Banking Summit web app demo.
+
+This Readme provides an overview of the project structure, technologies used, and instructions to get it up and running locally. There will be other markdown files diving deeper into specific implementation details.
 
 ## The Challenge
 
@@ -10,16 +12,6 @@ The goal was to scaffold a production-ready project structure from scratch that 
 - **Node.js + React** — a REST API backend paired with a modern React SPA frontend
 - **GitHub OAuth authentication** — users can sign in using their GitHub account; no username/password forms to build or maintain
 - **Clean developer experience** — a single `npm run dev` command that spins up the entire stack
-
-The main challenges were:
-
-1. **Shared types across packages** — the `User` type needs to exist in one place and be consumed by both the Express backend (for typing `req.user`) and the React frontend (for typing API responses). This required setting up a third `shared` package and wiring it into both apps via workspace references.
-
-2. **Passport.js + TypeScript** — Passport's type augmentation system (extending `Express.User`) requires a declaration file to tell TypeScript the shape of the authenticated user on `req.user`. Without this, every access to `req.user` would require a cast.
-
-3. **Session cookies across origins during development** — the Vite dev server runs on port 5173 while Express runs on port 3000. Browsers block cross-origin cookies by default, so the backend needs `cors` configured with `credentials: true` and the frontend needs a Vite proxy that forwards `/api/*` and `/auth/*` to the backend — making the browser think everything is on the same origin.
-
-4. **OAuth callback URL** — the GitHub callback must hit the backend directly (`localhost:3000`), not the Vite frontend. The backend then redirects the user back to the frontend after setting the session.
 
 ---
 
@@ -61,8 +53,6 @@ Key routes:
 
 - **React 18** with React Router for client-side routing
 - **Vite** as the build tool with a dev proxy routing `/api` and `/auth` to the backend
-- Two pages: `LoginPage` (GitHub login button) and `DashboardPage` (avatar, username, sign-out)
-- On load, `App.tsx` calls `/api/me` to check session state and decides which page to render
 
 ### Auth flow
 
@@ -119,12 +109,12 @@ Open [http://localhost:5173](http://localhost:5173).
 
 ## Tech Stack
 
-| Layer      | Technology                                     |
-| ---------- | ---------------------------------------------- |
-| Language   | TypeScript 5                                   |
-| Backend    | Node.js, Express 4                             |
-| Auth       | Passport.js, passport-github2, express-session |
-| Frontend   | React 18, React Router 7                       |
-| Build tool | Vite 6                                         |
-| Monorepo   | npm workspaces                                 |
-| Dev runner | concurrently                                   |
+| Layer      | Technology                                     | Reasoning                                                                                                                |
+| ---------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Language   | TypeScript 5                                   | Strongly typed language for both frontend and backend                                                                    |
+| Backend    | Node.js, Express 4                             | Lightweight and flexible server framework                                                                                |
+| Auth       | Passport.js, passport-github2, express-session | Simplifies OAuth integration and session management                                                                      |
+| Frontend   | React 18, React Router 7                       | Modern UI library with client-side routing                                                                               |
+| Build tool | Vite 6                                         | Fast development server with great support for monorepos and TypeScript. Also pretty much the baseline for React in 2026 |
+| Monorepo   | npm workspaces                                 | Built-in monorepo support for managing shared code and dependencies                                                      |
+| Dev runner | concurrently                                   | Run multiple npm scripts in parallel                                                                                     |
