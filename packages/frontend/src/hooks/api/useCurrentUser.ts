@@ -9,12 +9,16 @@ const fetchCurrentUser = async (): Promise<User | null> => {
 };
 
 export const useCurrentUser = () => {
-  const { data: user, isPending } = useQuery({
+  const {
+    data: user,
+    isPending,
+    isError,
+  } = useQuery({
     queryKey: CURRENT_USER_KEY,
     queryFn: fetchCurrentUser,
   });
 
-  return { user: user ?? null, isPending };
+  return { user: user ?? null, isPending, isError };
 };
 
 export const useLogout = () => {
