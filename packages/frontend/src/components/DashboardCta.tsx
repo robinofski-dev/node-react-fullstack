@@ -1,11 +1,13 @@
-import { Box, Button, CircularProgress } from "@mui/material";
+import { Alert, Box, Button, CircularProgress } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useCurrentUser } from "../hooks/api/useCurrentUser";
 import { AuthButton } from "./AuthButton";
 import { UserAvatar } from "./UserAvatar";
+import { useGithubAuthStatus } from "../hooks/helpers/useGithubAuthStatus";
 
 export const DashboardCta = () => {
   const { user, isPending } = useCurrentUser();
+  const { authError } = useGithubAuthStatus();
 
   if (isPending) {
     return (
@@ -27,6 +29,12 @@ export const DashboardCta = () => {
         <Box mb={4}>
           <UserAvatar user={user} />
         </Box>
+      )}
+
+      {authError && (
+        <Alert severity="error" sx={{ mb: 4, width: "100%", maxWidth: 400 }}>
+          Authentication with GitHub failed. Please try again.
+        </Alert>
       )}
 
       <Box display="flex" gap={2} flexWrap="wrap" justifyContent="center">
