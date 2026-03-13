@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { DashboardHeader } from "../components/DashboardHeader";
 import { DashboardCta } from "../components/DashboardCta";
+import { TalksTimeline } from "../components/TalksTimeline";
 
 const DashboardPage = () => {
   return (
@@ -25,6 +26,7 @@ const DashboardPage = () => {
     >
       <DashboardHeader />
       <DashboardCta />
+      <TalksTimeline />
     </Box>
   );
 };
