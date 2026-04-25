@@ -1,11 +1,9 @@
 import { Box } from "@mui/material";
-import { useGithubAuthStatus } from "../hooks/helpers/useGithubAuthStatus";
 import { DashboardHeader } from "../components/DashboardHeader";
 import { DashboardCta } from "../components/DashboardCta";
+import { TalksTimeline } from "../components/TalksTimeline";
 
-export default function DashboardPage() {
-  const { authError } = useGithubAuthStatus();
-
+const DashboardPage = () => {
   return (
     <Box
       display="flex"
@@ -28,6 +26,9 @@ export default function DashboardPage() {
     >
       <DashboardHeader />
       <DashboardCta />
+      <TalksTimeline />
     </Box>
   );
-}
+};
+
+export default DashboardPage;

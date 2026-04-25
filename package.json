@@ -10,6 +10,7 @@
     "build": "npm run build -w packages/shared && npm run build -w packages/backend && npm run build -w packages/frontend"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.3.0",
     "concurrently": "^9.1.2"
   }
 }
