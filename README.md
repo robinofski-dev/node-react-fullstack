@@ -19,7 +19,7 @@ The goal was to scaffold a production-ready project structure from scratch that 
 
 ### Monorepo structure
 
-```
+```bash
 node-react-fullstack/
 ├── package.json              # npm workspaces root, concurrently dev script
 ├── packages/
@@ -42,12 +42,13 @@ Defines the `User` interface (id, login, displayName, avatarUrl) and `AuthStatus
 - **CORS** configured to allow `http://localhost:5173` with credentials
 
 Key routes:
-| Method | Path | Description |
-|--------|------|-------------|
-| `GET` | `/auth/github` | Redirects to GitHub to begin OAuth flow |
-| `GET` | `/auth/github/callback` | GitHub redirects here after authorization; sets session and redirects to frontend |
-| `DELETE` | `/auth/logout` | Destroys the session |
-| `GET` | `/api/me` | Returns the authenticated user or `401` |
+
+| Method   | Path                    | Description                                                                       |
+| -------- | ----------------------- | --------------------------------------------------------------------------------- |
+| `GET`    | `/auth/github`          | Redirects to GitHub to begin OAuth flow                                           |
+| `GET`    | `/auth/github/callback` | GitHub redirects here after authorization; sets session and redirects to frontend |
+| `DELETE` | `/auth/logout`          | Destroys the session                                                              |
+| `GET`    | `/api/me`               | Returns the authenticated user or `401`                                           |
 
 ### Frontend (`packages/frontend`)
 
@@ -56,7 +57,7 @@ Key routes:
 
 ### Auth flow
 
-```
+```bash
 User clicks "Login with GitHub"
   → GET /auth/github (backend)
   → Redirect to github.com/login/oauth/authorize
