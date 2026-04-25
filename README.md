@@ -19,7 +19,7 @@ The goal was to scaffold a production-ready project structure from scratch that 
 
 ### Monorepo structure
 
-```
+```bash
 node-react-fullstack/
 ├── package.json              # npm workspaces root, concurrently dev script
 ├── packages/
@@ -42,12 +42,13 @@ Defines the `User` interface (id, login, displayName, avatarUrl) and `AuthStatus
 - **CORS** configured to allow `http://localhost:5173` with credentials
 
 Key routes:
-| Method | Path | Description |
-|--------|------|-------------|
-| `GET` | `/auth/github` | Redirects to GitHub to begin OAuth flow |
-| `GET` | `/auth/github/callback` | GitHub redirects here after authorization; sets session and redirects to frontend |
-| `DELETE` | `/auth/logout` | Destroys the session |
-| `GET` | `/api/me` | Returns the authenticated user or `401` |
+
+| Method   | Path                    | Description                                                                       |
+| -------- | ----------------------- | --------------------------------------------------------------------------------- |
+| `GET`    | `/auth/github`          | Redirects to GitHub to begin OAuth flow                                           |
+| `GET`    | `/auth/github/callback` | GitHub redirects here after authorization; sets session and redirects to frontend |
+| `DELETE` | `/auth/logout`          | Destroys the session                                                              |
+| `GET`    | `/api/me`               | Returns the authenticated user or `401`                                           |
 
 ### Frontend (`packages/frontend`)
 
@@ -56,7 +57,7 @@ Key routes:
 
 ### Auth flow
 
-```
+```bash
 User clicks "Login with GitHub"
   → GET /auth/github (backend)
   → Redirect to github.com/login/oauth/authorize
@@ -94,6 +95,7 @@ GITHUB_CLIENT_SECRET=your_client_secret
 SESSION_SECRET=a_long_random_string
 PORT=3000
 FRONTEND_URL=http://localhost:5173
+BACKEND_PUBLIC_URL=http://localhost:3000
 ```
 
 ### 3. Install and run
@@ -104,6 +106,33 @@ npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173).
+
+### 4. Run with Docker Compose
+
+You can run backend and frontend in separate containers with hot reload:
+
+```bash
+docker compose up --build
+```
+
+Then open [http://localhost:5173](http://localhost:5173).
+
+Useful commands:
+
+```bash
+# stop containers
+docker compose down
+
+# stop containers and remove volumes
+docker compose down -v
+```
+
+Notes:
+
+- Backend is exposed on `http://localhost:3000`
+- Frontend is exposed on `http://localhost:5173`
+- The frontend container proxies `/api` and `/auth` to the backend container over Docker network
+- GitHub OAuth callback uses `BACKEND_PUBLIC_URL` (defaults to `http://localhost:3000`)
 
 ---
 
