@@ -94,6 +94,7 @@ GITHUB_CLIENT_SECRET=your_client_secret
 SESSION_SECRET=a_long_random_string
 PORT=3000
 FRONTEND_URL=http://localhost:5173
+BACKEND_PUBLIC_URL=http://localhost:3000
 ```
 
 ### 3. Install and run
@@ -104,6 +105,33 @@ npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173).
+
+### 4. Run with Docker Compose
+
+You can run backend and frontend in separate containers with hot reload:
+
+```bash
+docker compose up --build
+```
+
+Then open [http://localhost:5173](http://localhost:5173).
+
+Useful commands:
+
+```bash
+# stop containers
+docker compose down
+
+# stop containers and remove volumes
+docker compose down -v
+```
+
+Notes:
+
+- Backend is exposed on `http://localhost:3000`
+- Frontend is exposed on `http://localhost:5173`
+- The frontend container proxies `/api` and `/auth` to the backend container over Docker network
+- GitHub OAuth callback uses `BACKEND_PUBLIC_URL` (defaults to `http://localhost:3000`)
 
 ---
 
